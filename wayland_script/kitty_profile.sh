@@ -6,6 +6,12 @@ kitty_conf="$HOME/.config/kitty/kitty.conf"
 
 # function to display options to user
 display_options() {
+	printf "\nKitty Configuration\n\n"
+
+	# output '-' 50 times
+	printf '%0.s-' {1..50}
+	printf "\n"
+
     # display the options
     printf "\nOption [1]: Change Font"
     printf "\nOption [2]: Change Font Size"

@@ -2,6 +2,12 @@
 
 # function to display the options to the user
 display_options() {
+	printf "\nGitHub Configuration Script\n\n"
+
+	# output '-' 50 times
+	printf '%0.s-' {1..50}
+	printf "\n"
+
 	# output options to user
 	printf "\nOption [1]: Install Git"
 	printf "\nOption [2]: Git Configuration"

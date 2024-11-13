@@ -4,7 +4,6 @@
 kitty_dir="$HOME/.config/kitty/"
 kitty_conf="$HOME/.config/kitty/kitty.conf"
 
-
 # function to display options to user
 display_options() {
     # display the options
@@ -159,8 +158,27 @@ change_background_opacity() {
 
 # our main function
 main() {
-	# call the function to display options to user
-	change_background_opacity
+	printf "\n"
+	# check if kitty directory exists
+	if [ -d "$kitty_dir" ]; then
+		printf "Kitty Directory Found\n"
+
+
+		if [ -d "$kitty_dir" ]; then
+			printf "Kitty Configuration Found\n"
+			# output '-' 50 times
+			printf '%0.s-' {1..50}
+			printf "\n"
+
+		else
+			printf "Kitty Configuration NOT Found\n"
+
+		fi
+
+	else
+		printf "Kitty Directory NOT Found\n\n"
+
+	fi
 
 
 }

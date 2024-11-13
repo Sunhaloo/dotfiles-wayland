@@ -29,14 +29,10 @@ display_options() {
 # function to move vaults from `GitHub` to `Obsidian`
 gh_to_obsidian() {
 	# output message that we are deleting folders in `Obsidian` directory
-	printf "\nDeleting Folders in '%s' Directory" "$obsidian"
+	printf "\nDeleting Folders in '%s' Directory\n\n" "$obsidian"
 
 	# delete the folders in the `Obsidian` directory
 	rm -rf "$obsidian_sun_vault" "$obsidian_qna_vault"
-
-	# output '-' 50 times
-	printf '%0.s-' {1..50}
-	printf "\n"
 
 	# copy "vaults" from `GitHub` directory to `Obsidian`
 	cp -r "$gh_sun_vault" "$gh_qna_vault" "$obsidian"
@@ -46,21 +42,17 @@ gh_to_obsidian() {
 	printf "\n"
 
 	# output confirmation message
-	printf "\nVaults have been Moved\n"
+	printf "\nVaults have been Moved!\n"
 }
 
 
 # function to move vaults form `Obsidian` to `GitHub`
 obsidian_to_gh() {
 	# output message that we are deleting folders in `Obsidian` directory
-	printf "\nDeleting Folders in '%s' Directory" "$gh"
+	printf "\nDeleting Folders in '%s' Directory\n\n" "$gh"
 
 	# delete the folders in the `GitHub` directory
 	rm -rf "$gh_sun_vault" "$gh_qna_vault"
-
-	# output '-' 50 times
-	printf '%0.s-' {1..50}
-	printf "\n"
 
 	# copy "vaults" from `Obsidian` directory to `GitHub`
 	cp -r "$obsidian_sun_vault" "$obsidian_qna_vault" "$gh"
@@ -70,7 +62,7 @@ obsidian_to_gh() {
 	printf "\n"
 
 	# output confirmation message
-	printf "\nVaults have been Moved\n"
+	printf "\nVaults have been Moved!\n"
 }
 
 

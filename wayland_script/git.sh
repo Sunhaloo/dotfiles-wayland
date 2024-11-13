@@ -55,7 +55,7 @@ configure_git() {
 
 
 # out main function
-main () {
+main() {
 	# call the function to display the options to the user
 	display_options
 	

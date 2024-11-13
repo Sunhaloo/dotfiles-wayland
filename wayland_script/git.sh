@@ -100,7 +100,7 @@ generate_ssh_key() {
 
 # out main function
 main() {
-	# call the function to display the options to the user
+	# call the function to display options to the user
 	display_options
 	
 	# ask the user to select and option
@@ -114,12 +114,15 @@ main() {
 	if [[ "$user_option" = 1 ]]; then
 		# call the function to check for Git in system
 		check_git_installed
+
 	elif [[ "$user_option" = 2 ]]; then
 		# call the function to configure Git
 		configure_git
+
 	elif [[ "$user_option" = 3 ]]; then
 		# user wants to generate SSH key
 		generate_ssh_key
+
 	elif [[ "$user_option" = 4 ]]; then
 		# user wants to exit the script
 		printf "\nGood Bye\n"

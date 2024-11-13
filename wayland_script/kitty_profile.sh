@@ -137,12 +137,12 @@ change_background_opacity() {
 		# disable transparency
         sed -i 's/^background_opacity\s\+[0-1]\{1\}\+\.[0-9]\{1\}\+/background_opacity 1.0/' "$kitty_conf"
         # output confirmation message
-        printf "\nChange Background Opacity To Opaque"
+        printf "\nChange Background Opacity To Opaque\n"
     elif [ "$user_opacity" = 2 ]; then
 		# enable transparency
         sed -i 's/^background_opacity\s\+[0-1]\{1\}\+\.[0-9]\{1\}\+/background_opacity 0.7/' "$kitty_conf"
         # output confirmation message
-        printf "\nChange Background Opacity To Desired Transparency"
+        printf "\nChange Background Opacity To Desired Transparency\n"
 
 	elif [ "$user_opacity" = 3 ]; then
 		# user wants to exit the script
@@ -163,24 +163,51 @@ main() {
 	if [ -d "$kitty_dir" ]; then
 		printf "Kitty Directory Found\n"
 
-
-		if [ -d "$kitty_dir" ]; then
+		# check if `kitty.conf` file exists
+		if [ -e "$kitty_conf" ]; then
 			printf "Kitty Configuration Found\n"
+
 			# output '-' 50 times
 			printf '%0.s-' {1..50}
 			printf "\n"
 
-		else
-			printf "Kitty Configuration NOT Found\n"
+			# call the function to display options to the user
+			display_options
 
+			# ask the user to select and option
+			read -p "Please Select and Option: " user_option
+
+			# conditions to evaluate depending on user's input
+			if [[ "$user_option" = 1 ]]; then
+				# if the user wants to change the font
+				change_font
+
+			elif [[ "$user_option" = 2 ]]; then
+				# if the user wants to change the font size
+				change_font_size
+
+			elif [[ "$user_option" = 3 ]]; then
+				# if the user wants to change the background opacity
+				change_background_opacity
+
+			elif [[ "$user_option" = 4 ]]; then
+				# user wants to exit the script
+				printf "\nGood Bye\n"
+				exit 0
+			fi
+
+
+		# if we don't file the configuration file for kitty
+		else
+			# output appropriate message
+			printf "Kitty Configuration NOT Found\n"
 		fi
 
+	# if we don't file the configuration directory for kitty
 	else
+		# output appropriate message
 		printf "Kitty Directory NOT Found\n\n"
-
 	fi
-
-
 }
 
 

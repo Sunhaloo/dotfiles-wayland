@@ -14,5 +14,4 @@
 12. grim
 13. slurp
 14. hyprpicker
-15. cliphist
-16. wl-clipboard
+15. wl-clipboard

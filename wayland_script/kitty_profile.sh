@@ -41,25 +41,25 @@ change_font() {
 	if [ "$user_font" = 1 ]; then
 		# User selects "JetBrainsMono"
 		sed -i 's/^font_family\s\+family="\(JetBrainsMono Nerd Font Mono\|Iosevka Nerd Font Mono\|FiraMono Nerd Font Mono\|Hack Nerd Font Mono\)"/font_family      family="JetBrainsMono Nerd Font Mono"/' "$kitty_conf"
-		# Output confirmation message
+		# output confirmation message
 		printf "\nFont changed to JetBrainsMono Nerd Font Mono... Please Reload Kitty\n"
 		
 	elif [ "$user_font" = 2 ]; then
 		# User selects "Iosevka"
 		sed -i 's/^font_family\s\+family="\(JetBrainsMono Nerd Font Mono\|FiraMono Nerd Font Mono\|Hack Nerd Font Mono\|Iosevka Nerd Font Mono\)"/font_family      family="Iosevka Nerd Font Mono"/' "$kitty_conf"
-		# Output confirmation message
+		# output confirmation message
 		printf "\nFont changed to Iosevka Nerd Font Mono... Please Reload Kitty\n"
 		
 	elif [ "$user_font" = 3 ]; then
 		# User selects "FiraMono"
 		sed -i 's/^font_family\s\+family="\(JetBrainsMono Nerd Font Mono\|Iosevka Nerd Font Mono\|Hack Nerd Font Mono\|FiraMono Nerd Font Mono\)"/font_family      family="FiraMono Nerd Font Mono"/' "$kitty_conf"
-		# Output confirmation message
+		# output confirmation message
 		printf "\nFont changed to Fira Mono Nerd Font Mono... Please Reload Kitty\n"
 		
 	elif [ "$user_font" = 4 ]; then
 		# User selects "Hack"
 		sed -i 's/^font_family\s\+family="\(JetBrainsMono Nerd Font Mono\|Iosevka Nerd Font Mono\|FiraMono Nerd Font Mono\|Hack Nerd Font Mono\)"/font_family      family="Hack Nerd Font Mono"/' "$kitty_conf"
-		# Output confirmation message
+		# output confirmation message
 		printf "\nFont changed to Hack Nerd Font... Please Reload Kitty\n"
 
 	elif [ "$user_font" = 5 ]; then
@@ -71,7 +71,44 @@ change_font() {
 		# If the user selects anything else
 		printf "\nWrong Option\n"
 	fi
+}
 
+
+# function to change the font size
+change_font_size() {
+	printf "\nFont Size Selection\n"
+
+	# output '-' 50 times
+	printf '%0.s-' {1..50}
+	printf "\n"
+
+	printf "\nNOTE: Font Size Format: 'xx.x' ( 'x' is a number from '0' to '9' )\n"
+	# prompt the user to enter font size
+	read -p "Please Enter Font Size: " user_font_size
+
+    # change the font size to desired user font size
+    sed -i "s/^font_size\s\+[0-9]\+\(\.[0-9]\+\)\?$/font_size $user_font_size/" "$kitty_conf"
+
+	# output confirmation message
+
+change_font_size() {
+    printf "\nChange Font Size\n"
+
+    # read the user's input
+    read -p "Please Enter Font Size (xx.x format, e.g., 12.5): " user_font_size
+
+    # regular expression to check if the input is a valid font size (xx.x format)
+    if [[ ! "$user_font_size" =~ ^[0-9]{1,2}(\.[0-9])?$ ]]; then
+        printf "\nError: Invalid font size. Please enter a valid font size in the format xx.x (e.g., 12.5).\n"
+        return 1  # Exit the function with an error code
+    fi
+
+    # change the font size to desired size in the configuration file
+    sed -i "s/^font_size\s\+[0-9]\+\(\.[0-9]\+\)\?$/font_size $user_font_size/" "$kitty_conf"
+
+    # outputs the confirmation message
+    printf "\nFont size changed to $user_font_size\n"
+}
 
 }
 
@@ -81,8 +118,7 @@ change_font() {
 main() {
 	# call the function to display options to user
 	# display_options
-
-	change_font
+	change_font_size
 
 
 }

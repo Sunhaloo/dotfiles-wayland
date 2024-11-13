@@ -7,6 +7,7 @@ display_options() {
 	# output '-' 50 times
 	printf '%0.s-' {1..50}
 	printf "\n"
+
     # display the options
     printf "\nOption [1]: Update - Install Drivers + Tools"
     printf "\nOption [2]: Update - Install Applications"
@@ -55,10 +56,17 @@ install_yay_package() {
 
 # function to evaluate user's choice on option
 select_choice_option() {
+	# conditions to evaluate depending on user's input
+	if [[ "$user_option" = 1 ]]; then
+		# user wants to update an install drivers and tools
+		install_package fastfetch
+		install_yay_package bibata-cursor-theme
 
-	# output '-' 50 times
-	printf '%0.s-' {1..50}
-	printf "\n"
+	elif [[ "$user_option" = 5 ]]; then
+		# user wants to exit the script
+		printf "\nGood Bye\n"
+		exit 0
+	fi
 }
 
 # our main function

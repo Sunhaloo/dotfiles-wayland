@@ -45,7 +45,7 @@ change_font() {
     # read the input from the user
     read -p "Please Enter Option: " user_font
 
-    # conditions
+    # conditions to evaluate based on user input
     # if user wants "JetBrainsMono Nerd Font"
     if [ "$user_font" = 1 ]; then
         # replace font with JetBrainsMono Nerd Font

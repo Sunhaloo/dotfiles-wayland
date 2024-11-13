@@ -37,27 +37,27 @@ change_font() {
 	printf '%0.s-' {1..50}
 	printf "\n"
 
-	# Conditions to evaluate based on user input
+	# conditions to evaluate based on user input
 	if [ "$user_font" = 1 ]; then
-		# User selects "JetBrainsMono"
+		# user selects "JetBrainsMono"
 		sed -i 's/^font_family\s\+family="\(JetBrainsMono Nerd Font Mono\|Iosevka Nerd Font Mono\|FiraMono Nerd Font Mono\|Hack Nerd Font Mono\)"/font_family      family="JetBrainsMono Nerd Font Mono"/' "$kitty_conf"
 		# output confirmation message
 		printf "\nFont changed to JetBrainsMono Nerd Font Mono... Please Reload Kitty\n"
 		
 	elif [ "$user_font" = 2 ]; then
-		# User selects "Iosevka"
+		# user selects "Iosevka"
 		sed -i 's/^font_family\s\+family="\(JetBrainsMono Nerd Font Mono\|FiraMono Nerd Font Mono\|Hack Nerd Font Mono\|Iosevka Nerd Font Mono\)"/font_family      family="Iosevka Nerd Font Mono"/' "$kitty_conf"
 		# output confirmation message
 		printf "\nFont changed to Iosevka Nerd Font Mono... Please Reload Kitty\n"
 		
 	elif [ "$user_font" = 3 ]; then
-		# User selects "FiraMono"
+		# user selects "FiraMono"
 		sed -i 's/^font_family\s\+family="\(JetBrainsMono Nerd Font Mono\|Iosevka Nerd Font Mono\|Hack Nerd Font Mono\|FiraMono Nerd Font Mono\)"/font_family      family="FiraMono Nerd Font Mono"/' "$kitty_conf"
 		# output confirmation message
 		printf "\nFont changed to Fira Mono Nerd Font Mono... Please Reload Kitty\n"
 		
 	elif [ "$user_font" = 4 ]; then
-		# User selects "Hack"
+		# user selects "Hack"
 		sed -i 's/^font_family\s\+family="\(JetBrainsMono Nerd Font Mono\|Iosevka Nerd Font Mono\|FiraMono Nerd Font Mono\|Hack Nerd Font Mono\)"/font_family      family="Hack Nerd Font Mono"/' "$kitty_conf"
 		# output confirmation message
 		printf "\nFont changed to Hack Nerd Font... Please Reload Kitty\n"
@@ -68,7 +68,7 @@ change_font() {
 		exit 0
 
 	else
-		# If the user selects anything else
+		# if the user selects anything else
 		printf "\nWrong Option\n"
 	fi
 }
@@ -82,43 +82,85 @@ change_font_size() {
 	printf '%0.s-' {1..50}
 	printf "\n"
 
-	printf "\nNOTE: Font Size Format: 'xx.x' ( 'x' is a number from '0' to '9' )\n"
+	printf "\nNOTE: Font Size Format: 'xx.x' ( 'x' is a number from '0' to '9' )\n\n"
 	# prompt the user to enter font size
 	read -p "Please Enter Font Size: " user_font_size
 
+	# check if user font size is in the correct format
+    if [[ ! "$user_font_size" =~ ^[0-9]{1,2}(\.[0-9])?$ ]]; then
+		# output '-' 50 times
+		printf '%0.s-' {1..50}
+		printf "\n"
+
+		# output the error message
+        printf "\n\nInvalid Font Size.\nPlease enter a valid font size in the format 'xx.x' (e.g., 12.5).\n\n"
+
+		# output '-' 50 times
+		printf '%0.s-' {1..50}
+		printf "\n"
+		# if not exit the program with the error code
+		return 1
+    fi
     # change the font size to desired user font size
     sed -i "s/^font_size\s\+[0-9]\+\(\.[0-9]\+\)\?$/font_size $user_font_size/" "$kitty_conf"
 
+	# output '-' 50 times
+	printf '%0.s-' {1..50}
+	printf "\n"
+
 	# output confirmation message
-
-change_font_size() {
-    printf "\nChange Font Size\n"
-
-    # read the user's input
-    read -p "Please Enter Font Size (xx.x format, e.g., 12.5): " user_font_size
-
-    # regular expression to check if the input is a valid font size (xx.x format)
-    if [[ ! "$user_font_size" =~ ^[0-9]{1,2}(\.[0-9])?$ ]]; then
-        printf "\nError: Invalid font size. Please enter a valid font size in the format xx.x (e.g., 12.5).\n"
-        return 1  # Exit the function with an error code
-    fi
-
-    # change the font size to desired size in the configuration file
-    sed -i "s/^font_size\s\+[0-9]\+\(\.[0-9]\+\)\?$/font_size $user_font_size/" "$kitty_conf"
-
-    # outputs the confirmation message
-    printf "\nFont size changed to $user_font_size\n"
+    printf "\nSuccessfully changed Font size changed to '$user_font_size'\n"
 }
 
-}
 
+# function to change the background opacity
+change_background_opacity() {
+	printf "\nBackground Opacity Selection\n"
+
+	# output '-' 50 times
+	printf '%0.s-' {1..50}
+	printf "\n"
+
+    # displays opacity options to the user
+    printf "\nOption [1]: Opaque"
+    printf "\nOption [2]: Enable Transparency"
+    printf "\nOption [3]: Exit\n\n"
+
+	# prompt the user to enter font option
+	read -p "Select Opacity Option: " user_opacity
+
+	# output '-' 50 times
+	printf '%0.s-' {1..50}
+	printf "\n"
+
+	# conditions to evaluate based on user input
+	if [ "$user_opacity" = 1 ]; then
+		# disable transparency
+        sed -i 's/^background_opacity\s\+[0-1]\{1\}\+\.[0-9]\{1\}\+/background_opacity 1.0/' "$kitty_conf"
+        # output confirmation message
+        printf "\nChange Background Opacity To Opaque"
+    elif [ "$user_opacity" = 2 ]; then
+		# enable transparency
+        sed -i 's/^background_opacity\s\+[0-1]\{1\}\+\.[0-9]\{1\}\+/background_opacity 0.7/' "$kitty_conf"
+        # output confirmation message
+        printf "\nChange Background Opacity To Desired Transparency"
+
+	elif [ "$user_opacity" = 3 ]; then
+		# user wants to exit the script
+		printf "\nGood Bye\n"
+		exit 0
+
+	else
+		# if the user selects anything else
+		printf "\nWrong Option\n"
+	fi
+}
 
 
 # our main function
 main() {
 	# call the function to display options to user
-	# display_options
-	change_font_size
+	change_background_opacity
 
 
 }

@@ -3,7 +3,7 @@
 1. hyprland
 2. xdg-desktop-portal-hyprland
 3. xdg-desktop-portal-wlr
-4. wofi
+4. rofi + rofi-emoji
 5. kitty
 6. hyprutils
 7. waybar

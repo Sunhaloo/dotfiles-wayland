@@ -15,3 +15,5 @@
 13. slurp
 14. hyprpicker
 15. wl-clipboard
+16. swaync
+17. hyprshot

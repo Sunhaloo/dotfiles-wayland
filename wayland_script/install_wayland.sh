@@ -9,7 +9,7 @@ display_options() {
 	printf "\n"
 
     # display the options
-    printf "\nOption [1]: Update - Install Drivers + Tools"
+    printf "\nOption [1]: Update - Install Hyprland + Install Drivers + Tools"
     printf "\nOption [2]: Update - Install Applications"
     printf "\nOption [3]: Create - Move Folders"
     printf "\nOption [4]: GitHub Configuration"
@@ -22,11 +22,13 @@ display_options() {
 install_package() {
 	# starts iterating over the arguments / packages
     for package in "$@"; do
+
         # if the package is already installed
         if pacman -Qs "$package" > /dev/null; then
             # output the approriate message
             echo "$package is already installed."
         # if the package has not been found
+
         else
 			# install the package ( without confirmation )
             echo "Installing $package..."
@@ -40,11 +42,13 @@ install_package() {
 install_yay_package() {
 	# starts iterating over the arguments / packages
     for package in "$@"; do
+
         # if the package is already installed
         if yay -Qs "$package" > /dev/null; then
             # output the approriate message
             echo "$package is already installed."
         # if the package has not been found
+
         else
 			# install the package ( without confirmation )
             echo "Installing $package..."
@@ -58,15 +62,37 @@ install_yay_package() {
 select_choice_option() {
 	# conditions to evaluate depending on user's input
 	if [[ "$user_option" = 1 ]]; then
-		# user wants to update an install drivers and tools
-		install_package fastfetch
-		install_yay_package bibata-cursor-theme
+		# call the function `install_hyprland_tools`
+		install_hyprland_tools
 
 	elif [[ "$user_option" = 5 ]]; then
 		# user wants to exit the script
 		printf "\nGood Bye\n"
 		exit 0
 	fi
+}
+
+
+# function to update, install Hyprland, tools and drivers
+install_hyprland_tools() {
+	printf "\nUpdate - Install Hyprland Tools + Drivers\n\n"
+
+	# output '-' 50 times
+	printf '%0.s-' {1..50}
+	printf "\n"
+
+	printf "\nUpdating System\n\n"
+	
+	# update the entire system
+	sudo pacman -Syu --noconfirm
+
+	# output '-' 50 times
+	printf '%0.s-' {1..50}
+	printf "\n"
+
+	# call the install function
+	install_package hyprland
+
 }
 
 # our main function

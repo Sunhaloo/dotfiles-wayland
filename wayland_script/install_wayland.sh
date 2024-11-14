@@ -9,11 +9,13 @@ display_options() {
 	printf "\n"
 
     # display the options
-    printf "\nOption [1]: Update - Install Hyprland + Install Drivers + Tools"
-    printf "\nOption [2]: Update - Install Applications"
-    printf "\nOption [3]: Create - Move Folders"
-    printf "\nOption [4]: GitHub Configuration"
-    printf "\nOption [5]: Exit\n\n"
+    printf "\nOption [1]: Update - Install Hyprland + Drivers + Tools"
+	printf "\nOption [2]: Update - Install GUI Applications"
+	printf "\nOption [3]: Move Configuration Files and Folders"
+	printf "\nOption [4]: Update - Install Terminal Applications"
+    printf "\nOption [5]: Create - Move Folders"
+    printf "\nOption [6]: GitHub Configuration"
+    printf "\nOption [7]: Exit\n\n"
 
 }
 
@@ -65,10 +67,26 @@ select_choice_option() {
 		# call the function `install_hyprland_tools`
 		install_hyprland_tools
 
-	elif [[ "$user_option" = 5 ]]; then
+	elif [[ "$user_option" = 2 ]]; then
+		# call the function `install_gui_apps`
+		install_gui_apps
+
+	elif [[ "$user_option" = 7 ]]; then
 		# user wants to exit the script
 		printf "\nGood Bye\n"
 		exit 0
+	else:
+		# users presses unavailable option
+		# output '-' 50 times
+		printf '%0.s-' {1..50}
+		printf "\n"
+
+		# output approriate message
+		printf "\nWrong Option\n"
+
+		# output '-' 50 times
+		printf '%0.s-' {1..50}
+		printf "\n"
 	fi
 }
 
@@ -88,12 +106,36 @@ install_hyprland_tools() {
 
 	# output '-' 50 times
 	printf '%0.s-' {1..50}
-	printf "\n"
+	printf "\n\n"
 
 	# call the install function
-	install_package hyprland
+	install_package git hyprland kitty hyprutils hyprshot hyprpicker hyprcursor hyprpaper hyprwayland-scanner xdg-desktop-portal-hyprland xdg-desktop-portal-wlr wl-clipboard power-profiles-daemon wl-clipboard power-profiles-daemon thunar-volman gvfs gvfs-afc brightnessctl gnome-keyring network-manager-applet ldns blueman lxinput rofi
 
 }
+
+
+# function to install GUI packages / applications
+install_gui_apps() {
+	printf "\nUpdate - Install GUI Applications / Packages\n\n"
+
+	# output '-' 50 times
+	printf '%0.s-' {1..50}
+	printf "\n"
+
+	printf "\nUpdating System\n\n"
+	
+	# update the entire system
+	sudo pacman -Syu --noconfirm
+
+	# output '-' 50 times
+	printf '%0.s-' {1..50}
+	printf "\n\n"
+
+	install_package kitty obsidian obs-studio discord ristretto mpv
+	install_yay_package vscodium-bin thorium-browser-bin
+
+}
+
 
 # our main function
 main() {

@@ -12,7 +12,7 @@ display_options() {
     printf "\nOption [1]: Update - Install Hyprland + Drivers + Tools"
 	printf "\nOption [2]: Update - Install GUI Applications"
 	printf "\nOption [3]: Populate Folders and Files"
-	printf "\nOption [4]: Update - Install Terminal Applications"
+	printf "\nOption [4]: Install Terminal Tools"
     printf "\nOption [5]: GitHub Configuration"
     printf "\nOption [6]: Exit\n\n"
 }
@@ -99,9 +99,9 @@ install_hyprland_tools() {
 	printf "\n\n"
 
 	# installing packages with pacman ( calling function `install_package` )
-	install_package git hyprland kitty hyprutils hyprshot hyprpicker hyprcursor hyprpaper hyprwayland-scanner xdg-desktop-portal-hyprland xdg-desktop-portal-wlr wl-clipboard power-profiles-daemon wl-clipboard power-profiles-daemon thunar-volman gvfs gvfs-afc brightnessctl gnome-keyring network-manager-applet ldns blueman lxinput rofi
+	install_package git hyprland kitty hyprutils hyprshot hyprpicker hyprcursor hyprpaper hyprwayland-scanner xdg-desktop-portal-hyprland xdg-desktop-portal-wlr wl-clipboard power-profiles-daemon wl-clipboard power-profiles-daemon thunar-volman gvfs gvfs-afc brightnessctl gnome-keyring network-manager-applet ldns blueman lxinput rofi yazi yarn
 	# installing packages with AUR helper ( calling function `install_yay_package` )
-	install_yay_package pyprland
+	install_yay_package pyprland bibata-cursor-theme banana-cursor-bin
 
 }
 
@@ -142,11 +142,56 @@ move_main_configuration() {
 	mkdir -p ~/{OBS\ Studio,Screenshots,Obsidian,GitHub}
 
 	# move required configuration folders to `.config`
-	cp -r ~/dotfiles-wayland/{hypr,waybar,kitty,nvim,rofi,code_codium,fastfetch,ohmyposh} ~/.config
+	cp -r ~/dotfiles-wayland/{hypr,waybar,nvim,rofi,code_codium,fastfetch,ohmyposh} ~/.config
 	# move required folders to `$HOME`
 	cp -r ~/dotfiles-wayland/wayland_script $HOME
 }
 
+
+# function to install oh-my-zsh
+install_omz() {
+	printf "\nOh-My-ZSH Installation\n\n"
+
+	# output '-' 50 times
+	printf '%0.s-' {1..50}
+	printf "\n"
+
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+	printf "\nOh-My-ZSH Installation Completed\n\n"
+
+	# output '-' 50 times
+	printf '%0.s-' {1..50}
+	printf "\n"
+
+	printf "\nOh-My-ZSH Plugins Installation\n\n"
+
+    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
+	printf "\nOh-My-ZSH Installation Completed\n\n"
+
+	# output '-' 50 times
+	printf '%0.s-' {1..50}
+	printf "\n"
+}
+
+# function to install tmux-tmp
+install_tpm() {
+    printf "\n\nTMUX TPM Installation\n\n"
+
+	# output '-' 50 times
+	printf '%0.s-' {1..50}
+	printf "\n"
+
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+	printf "\nOh-My-ZSH Installation Completed\n\n"
+
+	# output '-' 50 times
+	printf '%0.s-' {1..50}
+	printf "\n"
+}
 
 # function to move terminal configuration files and folders from github repo
 move_terminal_configuration() {
@@ -155,6 +200,14 @@ move_terminal_configuration() {
 	# output '-' 50 times
 	printf '%0.s-' {1..50}
 	printf "\n"
+
+	# move required configuration folders to `.config`
+	cp -r ~/dotfiles-wayland/kitty ~/.config
+
+	# call the function to install oh-my-zsh
+	install_omz
+	# call the function to install tmux-tpm
+	install_tpm
 
 }
 

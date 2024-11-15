@@ -99,9 +99,9 @@ install_hyprland_tools() {
 	printf "\n\n"
 
 	# installing packages with pacman ( calling function `install_package` )
-	install_package git hyprland kitty hyprutils hyprshot hyprpicker hyprcursor hyprpaper hyprwayland-scanner xdg-desktop-portal-hyprland xdg-desktop-portal-wlr wl-clipboard power-profiles-daemon wl-clipboard power-profiles-daemon thunar-volman gvfs gvfs-afc brightnessctl gnome-keyring network-manager-applet ldns blueman lxinput rofi yazi yarn
+	install_package git hyprland kitty hyprutils hyprpicker hyprcursor hyprpaper hyprwayland-scanner xdg-desktop-portal-hyprland xdg-desktop-portal-wlr wl-clipboard power-profiles-daemon wl-clipboard power-profiles-daemon thunar-volman gvfs gvfs-afc brightnessctl gnome-keyring network-manager-applet ldns blueman lxinput rofi yazi yarn
 	# installing packages with AUR helper ( calling function `install_yay_package` )
-	install_yay_package pyprland bibata-cursor-theme banana-cursor-bin
+	install_yay_package hyprshot pyprland bibata-cursor-theme banana-cursor-bin
 
 }
 

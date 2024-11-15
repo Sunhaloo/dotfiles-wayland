@@ -13,10 +13,8 @@ display_options() {
 	printf "\nOption [2]: Update - Install GUI Applications"
 	printf "\nOption [3]: Populate Folders and Files"
 	printf "\nOption [4]: Update - Install Terminal Applications"
-    printf "\nOption [5]: Create - Move Folders"
-    printf "\nOption [6]: GitHub Configuration"
-    printf "\nOption [7]: Exit\n\n"
-
+    printf "\nOption [5]: GitHub Configuration"
+    printf "\nOption [6]: Exit\n\n"
 }
 
 
@@ -60,6 +58,27 @@ install_yay_package() {
 }
 
 
+# function to setup Git / GitHub
+setup_git() {
+	if [ -f git.sh ]; then
+		# make git script executable and run it
+		chmod +x git.sh
+		bash ./git.sh
+	# if the file has not been found
+	else
+		# output approriate message
+		printf "\nSript File has NOT been Found!!!\n\n"
+
+		# output '-' 50 times
+		printf '%0.s-' {1..50}
+		printf "\n"
+
+		# exit with error
+		exit 1
+	fi
+}
+
+
 
 
 # function to update, install Hyprland, tools and drivers
@@ -81,6 +100,8 @@ install_hyprland_tools() {
 
 	# installing packages with pacman ( calling function `install_package` )
 	install_package git hyprland kitty hyprutils hyprshot hyprpicker hyprcursor hyprpaper hyprwayland-scanner xdg-desktop-portal-hyprland xdg-desktop-portal-wlr wl-clipboard power-profiles-daemon wl-clipboard power-profiles-daemon thunar-volman gvfs gvfs-afc brightnessctl gnome-keyring network-manager-applet ldns blueman lxinput rofi
+	# installing packages with AUR helper ( calling function `install_yay_package` )
+	install_yay_package pyprland
 
 }
 
@@ -106,12 +127,11 @@ install_gui_apps() {
 	install_package kitty obsidian obs-studio discord ristretto mpv
 	# installing packages with AUR helper ( calling function `install_yay_package` )
 	install_yay_package vscodium-bin thorium-browser-bin
-
 }
 
 
-# function to move configuration file from github repo
-move_all_configurations() {
+# function to move configuration folders from github repo
+move_main_configuration() {
 	printf "\nPopulating Folders and Files\n\n"
 
 	# output '-' 50 times
@@ -121,8 +141,20 @@ move_all_configurations() {
 	# make folders found in home directory
 	mkdir -p ~/{OBS\ Studio,Screenshots,Obsidian,GitHub}
 
-	# move all of the configuration files and folders to required location
-	# hyprland related configurations
+	# move required configuration folders to `.config`
+	cp -r ~/dotfiles-wayland/{hypr,waybar,kitty,nvim,rofi,code_codium,fastfetch,ohmyposh} ~/.config
+	# move required folders to `$HOME`
+	cp -r ~/dotfiles-wayland/wayland_script $HOME
+}
+
+
+# function to move terminal configuration files and folders from github repo
+move_terminal_configuration() {
+	printf "\nTerminal Related Files\n\n"
+
+	# output '-' 50 times
+	printf '%0.s-' {1..50}
+	printf "\n"
 
 }
 
@@ -139,22 +171,30 @@ select_choice_option() {
 		install_gui_apps
 
 	elif [[ "$user_option" = 3 ]]; then
-		# call function to move configuration files
-		move_all_configurations
+		# call function to move main configuration folders
+		move_main_configuration
 
-	elif [[ "$user_option" = 7 ]]; then
+	elif [[ "$user_option" = 4 ]]; then
+		# call function to move configuration files and folders
+		move_terminal_configuration
+
+	elif [[ "$user_option" = 5 ]]; then
+		# call the function for Git configuration
+		setup_git
+
+	elif [[ "$user_option" = 6 ]]; then
 		# user wants to exit the script
-		printf "\nGood Bye\n"
+		printf "\nGood Bye!\n"
 		exit 0
 
-	else:
+	else
 		# users presses unavailable option
 		# output '-' 50 times
 		printf '%0.s-' {1..50}
 		printf "\n"
 
 		# output approriate message
-		printf "\nWrong Option\n"
+		printf "\nWrong Option\n\n"
 
 		# output '-' 50 times
 		printf '%0.s-' {1..50}

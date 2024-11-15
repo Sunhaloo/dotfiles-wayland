@@ -87,8 +87,21 @@ main() {
 		gh_to_obsidian
 	elif [[ "$user_option" = 3 ]]; then
 		# user wants to exit the script
-		printf "\nGood Bye\n"
+		printf "\nGood Bye!\n"
 		exit 0
+
+	else
+		# users presses unavailable option
+		# output '-' 50 times
+		printf '%0.s-' {1..50}
+		printf "\n"
+
+		# output approriate message
+		printf "\nWrong Option\n\n"
+
+		# output '-' 50 times
+		printf '%0.s-' {1..50}
+		printf "\n"
 	fi
 }
 

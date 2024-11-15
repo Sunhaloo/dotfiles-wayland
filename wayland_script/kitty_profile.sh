@@ -198,10 +198,22 @@ main() {
 
 			elif [[ "$user_option" = 4 ]]; then
 				# user wants to exit the script
-				printf "\nGood Bye\n"
+				printf "\nGood Bye!\n"
 				exit 0
-			fi
 
+			else
+				# users presses unavailable option
+				# output '-' 50 times
+				printf '%0.s-' {1..50}
+				printf "\n"
+
+				# output approriate message
+				printf "\nWrong Option\n\n"
+
+				# output '-' 50 times
+				printf '%0.s-' {1..50}
+				printf "\n"
+			fi
 
 		# if we don't file the configuration file for kitty
 		else

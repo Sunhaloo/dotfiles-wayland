@@ -203,6 +203,8 @@ move_terminal_configuration() {
 
 	# move required configuration folders to `.config`
 	cp -r ~/dotfiles-wayland/kitty ~/.config
+	cp -r ~/dotfiles-wayland/.zshrc $HOME
+	cp -r ~/dotfiles-wayland/.tmux.conf $HOME
 
 	# call the function to install oh-my-zsh
 	install_omz
